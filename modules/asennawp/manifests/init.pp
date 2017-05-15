@@ -73,7 +73,7 @@ class asennawp {
 		ensure => "absent",
 	}
 
-	
+	#mysql virheiden poisto
 	file {"/etc/puppet/modules/mysql/manifests/client/install.pp":
 		content => template ("asennawordpress/mysqlclientinstall.pp"),
 	}
