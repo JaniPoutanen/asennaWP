@@ -73,7 +73,7 @@ class asennawp {
 		ensure => "absent",
 	}
 
-	#mysql virheiden poisto
+	#mysql virheiden poisto livetikulta käynnistettäessä(lähde: https://markuspyharanta.wordpress.com/2016/12/10/palvelinten-hallinta-oma-moduuli/)
 	file {"/etc/puppet/modules/mysql/manifests/client/install.pp":
 		content => template ("asennawordpress/mysqlclientinstall.pp"),
 	}
