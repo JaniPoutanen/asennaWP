@@ -1,5 +1,4 @@
-# asennaWP
-Asentaa LAMP:in ja Wordpressin
+# Asenna LAMP ja Wordpress
 
 Moduuli on tehty Haaga-Helia Ammattikorkeakoulun [Palvelinten Hallinta](http://terokarvinen.com/2017/aikataulu-%E2%80%93-palvelinten-hallinta-ict4tn022-2-%E2%80%93-5-op-uusi-ops-loppukevat-2017-p2) lopputyöksi.
 
