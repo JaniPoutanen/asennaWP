@@ -40,7 +40,7 @@ class asennawp {
 	}
 
 	exec { purawp:
-                command => "sudo tar xzvf /etc/puppet/modules/asennawp/manifests/latest.tar.gz -C /etc/puppet/modules/asennawordpress/manifests ",
+                command => "sudo tar xzvf /etc/puppet/modules/asennawp/manifests/latest.tar.gz -C /etc/puppet/modules/asennawp/manifests ",
                 path => "/bin:/usr/bin:/sbin:/usr/sbin:",
 		creates => "/etc/puppet/modules/asennawp/manifests/wordpress",
 	}
@@ -53,8 +53,8 @@ class asennawp {
 	}
 
 	#luodaan uploads kansion
-	file { ['var/www/html/wp-content', '/var/www/html/wp-content/uploads']:
-		ensure => 'directory,
+	file { ['/var/www/html/wp-content', '/var/www/html/wp-content/uploads']:
+		ensure => 'directory',
 	}
 
 	#konfiguraatiotiedostojen luonti
