@@ -47,9 +47,9 @@ class asennawp {
 
 	exec { siirrawp:
                 command => "sudo rsync -avP /etc/puppet/modules/asennawp/manifests/wordpress/ /var/www/html/",
-                path => "/bin:/usr/bin:/sbin:/usr/sbin:",
-		creates => "/var/www/html/wp-config.php",
-		require => "File[/etc/puppet/modules/asennawp/manifests/wordpress/wp-config.php]",
+                path => '/bin:/usr/bin:/sbin:/usr/sbin:',
+		creates => '/var/www/html/wp-config.php',
+		require => 'File[/etc/puppet/modules/asennawp/manifests/wordpress/wp-config.php]',
 	}
 
 	#luodaan uploads kansion
@@ -59,8 +59,8 @@ class asennawp {
 
 	#konfiguraatiotiedostojen luonti
 	file { '/etc/puppet/modules/asennawp/manifests/wordpress/wp-config.php':
-		content => template ('asennawp/wp-config.php'),
-		require => Exec['purawp'],
+		content => template ('asennawp/wp-config.php.erb'),
+		require => Exec ['purawp'],
 	}
 
 	file { '/etc/apache2/mods-available/php7.0.conf':
