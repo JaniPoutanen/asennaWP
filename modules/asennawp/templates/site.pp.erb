@@ -1,0 +1,11 @@
+include asennawp
+
+class { 'mysql::serrver':
+	root_password => 'wwww.§ponen€.FI7',}
+
+mysql::db { 'wordpress':
+  user     => 'wordpressuser',
+  password => 'wordpressuserpassword',
+  host     => 'localhost',
+  grant    => ['ALL'],
+}

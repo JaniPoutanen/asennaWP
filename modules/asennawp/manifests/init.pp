@@ -1,7 +1,8 @@
+
 class asennawp {
 	
 	#asennetaan paketit
-	$paketit = [ 'php7.0','ssh','php-gd', 'php-ssh2','php7.0-phpdbg','rsync','php7.0-mysql' ]
+	$paketit = ['apache2', 'php7.0','ssh','php-gd', 'php-ssh2','php7.0-phpdbg','rsync','php7.0-mysql' ]
 	
 	package { $paketit: 
 		ensure=> 'installed',
@@ -16,10 +17,10 @@ class asennawp {
 	
 	#luodaan site.pp
 	file { '/etc/puppet/manifests/site.pp':
-		content => template ('asennawp/site.pp'),
+		content => template ('asennawp/site.pp.erb'),
 	}
 	
-	#asennetaan pupptlabsin avulla apache2 ja mysql
+	#asennetaan puppetlabsin modulit, jotka asentavat apache2 ja mysql
 	exec { puppetmodule-apache2:
 		command => 'sudo puppet module install puppetlabs-apache',
 		path => '/bin:/usr/bin:/sbin:/usr/sbin:',
@@ -57,28 +58,29 @@ class asennawp {
 		ensure => 'directory',
 	}
 
-	#kkonfiguraatiotiedostojen luonti
-	file { "/etc/puppet/modules/asennawp/manifests/wordpress/wp-config.php":
-                content => template ("asennawp/wp-config.php"),
-		require => Exec[wordpressunpack]
+	#konfiguraatiotiedostojen luonti
+	file { '/etc/puppet/modules/asennawp/manifests/wordpress/wp-config.php':
+                content => template ('asennawp/wp-config.php'),
+		require => Exec['purawp']
 	}
 
-	file { "/etc/apache2/mods-available/php7.0.conf":
-		content => template ('asennawp/php7.0.conf'),
-		require => "Package[libapache2-mod-php7.0]"
+	file { '/etc/apache2/mods-available/php7.0.conf':
+		content => template ('asennawp/php7.0.conf.erb'),
+		require => Package['libapache2-mod-php7.0']
 	}
 	
 	#poistetaan apachen oletussivu
-	file { "/var/www/html/index.html":
-		ensure => "absent",
+	file { '/var/www/html/index.html':
+		ensure => 'absent',
+		require => Package['apache2'],
 	}
 
 	
-	file {"/etc/puppet/modules/mysql/manifests/client/install.pp":
-		content => template ("asennawordpress/mysqlclientinstall.pp"),
-	}
+#	file {'/etc/puppet/modules/mysql/manifests/client/install.pp':
+#		content => template ('asennawordpress/mysqlclientinstall.pp.erb'),
+#	}
 
-	file {"/etc/puppet/modules/mysql/manifests/server/install.pp":
-		content => template ("asennawordpress/mysqlserverinstall.pp"),
-	}	
-}
+#	file {'/etc/puppet/modules/mysql/manifests/server/install.pp':
+#		content => template ('asennawordpress/mysqlserverinstall.pp.erb'),
+#	}	
+
