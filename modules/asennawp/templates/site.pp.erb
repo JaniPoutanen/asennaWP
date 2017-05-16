@@ -1,13 +1,11 @@
 include asennawordpress
 
-<<<<<<< HEAD
+#mysql-rooti
 class { 'mysql::server':
-	root_password => 'wwww.§ponen€.FI7',}
-=======
-class{  'mysql::server':
-         root_password => '!passwordrootmysql!',}
->>>>>>> 674ee98549e6b809c9672681bc5d91c504020ccb
+	root_password => '',n salasana
+}
 
+#wordpress tietokannan käyttäjän tiedot
 mysql::db { 'wordpress':
   user     => 'wordpressuser',
   password => 'wordpressuserpassword',
