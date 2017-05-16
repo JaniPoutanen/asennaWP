@@ -75,12 +75,12 @@ class asennawp {
 	}
 
 	
-#	file {'/etc/puppet/modules/mysql/manifests/client/install.pp':
-#		content => template ('asennawordpress/mysqlclientinstall.pp.erb'),
-#	}
+	file {'/etc/puppet/modules/mysql/manifests/client/install.pp':
+		content => template ('asennawp/mysqlclientinstall.pp.erb'),
+	}
 
-#	file {'/etc/puppet/modules/mysql/manifests/server/install.pp':
-#		content => template ('asennawordpress/mysqlserverinstall.pp.erb'),
-#	}	
+	file {'/etc/puppet/modules/mysql/manifests/server/install.pp':
+		content => template ('asennawp/mysqlserverinstall.pp.erb'),
+	}	
 
 }
