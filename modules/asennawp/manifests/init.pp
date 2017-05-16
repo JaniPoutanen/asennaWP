@@ -1,4 +1,3 @@
-
 class asennawp {
 	
 	#asennetaan paketit
@@ -12,7 +11,7 @@ class asennawp {
 	package { 'libapache2-mod-php7.0':
 		ensure => 'installed',
 		require => Package[ 'apache2'],
-		allowcdrom => "true"}
+		allowcdrom => "true",
 	}
 	
 	#luodaan site.pp
@@ -54,14 +53,14 @@ class asennawp {
 	}
 
 	#luodaan uploads kansion
-	file { "/var/www/html/wp-content/uploads":
-		ensure => 'directory',
+	file { ['var/www/html/wp-content', '/var/www/html/wp-content/uploads']:
+		ensure => 'directory,
 	}
 
 	#konfiguraatiotiedostojen luonti
 	file { '/etc/puppet/modules/asennawp/manifests/wordpress/wp-config.php':
-                content => template ('asennawp/wp-config.php'),
-		require => Exec['purawp']
+		content => template ('asennawp/wp-config.php'),
+		require => Exec['purawp'],
 	}
 
 	file { '/etc/apache2/mods-available/php7.0.conf':
@@ -84,3 +83,4 @@ class asennawp {
 #		content => template ('asennawordpress/mysqlserverinstall.pp.erb'),
 #	}	
 
+}
