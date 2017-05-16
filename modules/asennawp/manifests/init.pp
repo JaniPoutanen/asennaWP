@@ -1,7 +1,7 @@
 class asennawp {
 	
 	#asennetaan paketit
-	$paketit = ['apache2', 'php7.0','ssh','php-gd', 'php-ssh2','php7.0-phpdbg','rsync','php7.0-mysql' ]
+	$paketit = ['apache2', 'php7.0','ssh','php-gd', 'php-ssh2','php7.0-phpdbg','rsync','php7.0-mysql','php-curl', 'php-mbstring', 'php-mcrypt', 'php-xml', 'php-xmlrpc' ]
 	
 	package { $paketit: 
 		ensure=> 'installed',
@@ -68,13 +68,18 @@ class asennawp {
 		require => Package['libapache2-mod-php7.0']
 	}
 	
+        file { '/etc/apache2/apache2.conf':
+                content => template ('asennawp/apache2.conf.erb'),
+		require => Package['apache2'],
+        }
+
 	#poistetaan apachen oletussivu
 	file { '/var/www/html/index.html':
 		ensure => 'absent',
 		require => Package['apache2'],
-	}
-
+	}	
 	
+	#livetikun mysql ongelmat
 	file {'/etc/puppet/modules/mysql/manifests/client/install.pp':
 		content => template ('asennawp/mysqlclientinstall.pp.erb'),
 	}
