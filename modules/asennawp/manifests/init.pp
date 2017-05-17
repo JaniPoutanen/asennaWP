@@ -20,16 +20,23 @@ class asennawp {
 	}
 	
 	#asennetaan puppetlabsin modulit, jotka asentavat apache2 ja mysql
-	exec { puppetmodule-apache2:
-		command => 'sudo puppet module install puppetlabs-apache',
-		path => '/bin:/usr/bin:/sbin:/usr/sbin:',
-		creates => '/etc/puppet/modules/apache', 
-	}
+#	exec { puppetmodule-apache2:
+#		command => 'sudo puppet module install puppetlabs-apache',
+#		path => '/bin:/usr/bin:/sbin:/usr/sbin:',
+#		creates => '/etc/puppet/modules/apache', 
+#	}
 
 	exec { puppetmodule-mysql: 
 		command => "sudo puppet module install puppetlabs-mysql",
 		path => "/bin:/usr/bin:/sbin:/usr/sbin:",
 		creates => "/etc/puppet/modules/mysql", 
+	}
+	
+	#Pidetään Apache käynnissä
+	 service { 'apache2':
+    		ensure => 'true',
+		enable => 'true',
+		require => Package['apache2'],
 	}
 
 	#ladataan viimeisin wordpress, puretaan se /var/www/html-kansioon
@@ -64,11 +71,13 @@ class asennawp {
 	}
 
 	file { '/etc/apache2/mods-available/php7.0.conf':
+		notify => Service['apache2'],
 		content => template ('asennawp/php7.0.conf.erb'),
-		require => Package['libapache2-mod-php7.0']
+		require => Package['libapache2-mod-php7.0'],
 	}
 	
         file { '/etc/apache2/apache2.conf':
+		notify => Service['apache2'],
                 content => template ('asennawp/apache2.conf.erb'),
 		require => Package['apache2'],
         }
