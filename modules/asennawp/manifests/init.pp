@@ -19,13 +19,14 @@ class asennawp {
 		content => template ('asennawp/site.pp.erb'),
 	}
 	
-	#asennetaan puppetlabsin modulit, jotka asentavat apache2 ja mysql
+	#Apache sopivampi asentaa ilman puppetabsin moduli
 #	exec { puppetmodule-apache2:
 #		command => 'sudo puppet module install puppetlabs-apache',
 #		path => '/bin:/usr/bin:/sbin:/usr/sbin:',
 #		creates => '/etc/puppet/modules/apache', 
 #	}
 
+	#Mysqln asennus puppetlabsin moduulilla. Toimiva ratkaisu.
 	exec { puppetmodule-mysql: 
 		command => "sudo puppet module install puppetlabs-mysql",
 		path => "/bin:/usr/bin:/sbin:/usr/sbin:",
